@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laywer.interprelaw.mapper.PrivateLendBaseMapper">
+  <resultMap id="BaseResultMap" type="com.laywer.interprelaw.model.PrivateLendBase">
+    <id column="caseId" jdbcType="INTEGER" property="caseid" />
+    <result column="whetherRepay" jdbcType="INTEGER" property="whetherrepay" />
+    <result column="repaymentAmount" jdbcType="INTEGER" property="repaymentamount" />
+    <result column="whetherInterest" jdbcType="INTEGER" property="whetherinterest" />
+    <result column="interestRate" jdbcType="DOUBLE" property="interestrate" />
+    <result column="defeandantExpenses" jdbcType="INTEGER" property="defeandantexpenses" />
+    <result column="otherFee" jdbcType="INTEGER" property="otherfee" />
+    <result column="whetherOverdue" jdbcType="INTEGER" property="whetheroverdue" />
+    <result column="iou" jdbcType="INTEGER" property="iou" />
+    <result column="commitment" jdbcType="INTEGER" property="commitment" />
+    <result column="transferInstructions" jdbcType="INTEGER" property="transferinstructions" />
+    <result column="weChatRecord" jdbcType="INTEGER" property="wechatrecord" />
+    <result column="otherEvidence" jdbcType="INTEGER" property="otherevidence" />
+    <result column="amountReturned" jdbcType="INTEGER" property="amountreturned" />
+    <result column="amountOwed" jdbcType="INTEGER" property="amountowed" />
+    <result column="cash" jdbcType="INTEGER" property="cash" />
+    <result column="bankTransfer" jdbcType="INTEGER" property="banktransfer" />
+    <result column="creditCard" jdbcType="INTEGER" property="creditcard" />
+    <result column="WATransfer" jdbcType="INTEGER" property="watransfer" />
+    <result column="whetherMoneyTransfer" jdbcType="INTEGER" property="whethermoneytransfer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    caseId, whetherRepay, repaymentAmount, whetherInterest, interestRate, defeandantExpenses, 
+    otherFee, whetherOverdue, iou, commitment, transferInstructions, weChatRecord, otherEvidence, 
+    amountReturned, amountOwed, cash, bankTransfer, creditCard, WATransfer, whetherMoneyTransfer
+  </sql>
+  <select id="selectByExample" parameterType="com.laywer.interprelaw.model.PrivateLendBaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_privatelend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_privatelend
+    where caseId = #{caseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from base_privatelend
+    where caseId = #{caseid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laywer.interprelaw.model.PrivateLendBaseExample">
+    delete from base_privatelend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laywer.interprelaw.model.PrivateLendBase">
+    insert into base_privatelend (caseId, whetherRepay, repaymentAmount, 
+      whetherInterest, interestRate, defeandantExpenses, 
+      otherFee, whetherOverdue, iou, 
+      commitment, transferInstructions, weChatRecord, 
+      otherEvidence, amountReturned, amountOwed, 
+      cash, bankTransfer, creditCard, 
+      WATransfer, whetherMoneyTransfer)
+    values (#{caseid,jdbcType=INTEGER}, #{whetherrepay,jdbcType=INTEGER}, #{repaymentamount,jdbcType=INTEGER}, 
+      #{whetherinterest,jdbcType=INTEGER}, #{interestrate,jdbcType=DOUBLE}, #{defeandantexpenses,jdbcType=INTEGER}, 
+      #{otherfee,jdbcType=INTEGER}, #{whetheroverdue,jdbcType=INTEGER}, #{iou,jdbcType=INTEGER}, 
+      #{commitment,jdbcType=INTEGER}, #{transferinstructions,jdbcType=INTEGER}, #{wechatrecord,jdbcType=INTEGER}, 
+      #{otherevidence,jdbcType=INTEGER}, #{amountreturned,jdbcType=INTEGER}, #{amountowed,jdbcType=INTEGER}, 
+      #{cash,jdbcType=INTEGER}, #{banktransfer,jdbcType=INTEGER}, #{creditcard,jdbcType=INTEGER}, 
+      #{watransfer,jdbcType=INTEGER}, #{whethermoneytransfer,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laywer.interprelaw.model.PrivateLendBase">
+    insert into base_privatelend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseid != null">
+        caseId,
+      </if>
+      <if test="whetherrepay != null">
+        whetherRepay,
+      </if>
+      <if test="repaymentamount != null">
+        repaymentAmount,
+      </if>
+      <if test="whetherinterest != null">
+        whetherInterest,
+      </if>
+      <if test="interestrate != null">
+        interestRate,
+      </if>
+      <if test="defeandantexpenses != null">
+        defeandantExpenses,
+      </if>
+      <if test="otherfee != null">
+        otherFee,
+      </if>
+      <if test="whetheroverdue != null">
+        whetherOverdue,
+      </if>
+      <if test="iou != null">
+        iou,
+      </if>
+      <if test="commitment != null">
+        commitment,
+      </if>
+      <if test="transferinstructions != null">
+        transferInstructions,
+      </if>
+      <if test="wechatrecord != null">
+        weChatRecord,
+      </if>
+      <if test="otherevidence != null">
+        otherEvidence,
+      </if>
+      <if test="amountreturned != null">
+        amountReturned,
+      </if>
+      <if test="amountowed != null">
+        amountOwed,
+      </if>
+      <if test="cash != null">
+        cash,
+      </if>
+      <if test="banktransfer != null">
+        bankTransfer,
+      </if>
+      <if test="creditcard != null">
+        creditCard,
+      </if>
+      <if test="watransfer != null">
+        WATransfer,
+      </if>
+      <if test="whethermoneytransfer != null">
+        whetherMoneyTransfer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseid != null">
+        #{caseid,jdbcType=INTEGER},
+      </if>
+      <if test="whetherrepay != null">
+        #{whetherrepay,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentamount != null">
+        #{repaymentamount,jdbcType=INTEGER},
+      </if>
+      <if test="whetherinterest != null">
+        #{whetherinterest,jdbcType=INTEGER},
+      </if>
+      <if test="interestrate != null">
+        #{interestrate,jdbcType=DOUBLE},
+      </if>
+      <if test="defeandantexpenses != null">
+        #{defeandantexpenses,jdbcType=INTEGER},
+      </if>
+      <if test="otherfee != null">
+        #{otherfee,jdbcType=INTEGER},
+      </if>
+      <if test="whetheroverdue != null">
+        #{whetheroverdue,jdbcType=INTEGER},
+      </if>
+      <if test="iou != null">
+        #{iou,jdbcType=INTEGER},
+      </if>
+      <if test="commitment != null">
+        #{commitment,jdbcType=INTEGER},
+      </if>
+      <if test="transferinstructions != null">
+        #{transferinstructions,jdbcType=INTEGER},
+      </if>
+      <if test="wechatrecord != null">
+        #{wechatrecord,jdbcType=INTEGER},
+      </if>
+      <if test="otherevidence != null">
+        #{otherevidence,jdbcType=INTEGER},
+      </if>
+      <if test="amountreturned != null">
+        #{amountreturned,jdbcType=INTEGER},
+      </if>
+      <if test="amountowed != null">
+        #{amountowed,jdbcType=INTEGER},
+      </if>
+      <if test="cash != null">
+        #{cash,jdbcType=INTEGER},
+      </if>
+      <if test="banktransfer != null">
+        #{banktransfer,jdbcType=INTEGER},
+      </if>
+      <if test="creditcard != null">
+        #{creditcard,jdbcType=INTEGER},
+      </if>
+      <if test="watransfer != null">
+        #{watransfer,jdbcType=INTEGER},
+      </if>
+      <if test="whethermoneytransfer != null">
+        #{whethermoneytransfer,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laywer.interprelaw.model.PrivateLendBaseExample" resultType="java.lang.Integer">
+    select count(*) from base_privatelend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update base_privatelend
+    <set>
+      <if test="record.caseid != null">
+        caseId = #{record.caseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.whetherrepay != null">
+        whetherRepay = #{record.whetherrepay,jdbcType=INTEGER},
+      </if>
+      <if test="record.repaymentamount != null">
+        repaymentAmount = #{record.repaymentamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.whetherinterest != null">
+        whetherInterest = #{record.whetherinterest,jdbcType=INTEGER},
+      </if>
+      <if test="record.interestrate != null">
+        interestRate = #{record.interestrate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.defeandantexpenses != null">
+        defeandantExpenses = #{record.defeandantexpenses,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherfee != null">
+        otherFee = #{record.otherfee,jdbcType=INTEGER},
+      </if>
+      <if test="record.whetheroverdue != null">
+        whetherOverdue = #{record.whetheroverdue,jdbcType=INTEGER},
+      </if>
+      <if test="record.iou != null">
+        iou = #{record.iou,jdbcType=INTEGER},
+      </if>
+      <if test="record.commitment != null">
+        commitment = #{record.commitment,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferinstructions != null">
+        transferInstructions = #{record.transferinstructions,jdbcType=INTEGER},
+      </if>
+      <if test="record.wechatrecord != null">
+        weChatRecord = #{record.wechatrecord,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherevidence != null">
+        otherEvidence = #{record.otherevidence,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountreturned != null">
+        amountReturned = #{record.amountreturned,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountowed != null">
+        amountOwed = #{record.amountowed,jdbcType=INTEGER},
+      </if>
+      <if test="record.cash != null">
+        cash = #{record.cash,jdbcType=INTEGER},
+      </if>
+      <if test="record.banktransfer != null">
+        bankTransfer = #{record.banktransfer,jdbcType=INTEGER},
+      </if>
+      <if test="record.creditcard != null">
+        creditCard = #{record.creditcard,jdbcType=INTEGER},
+      </if>
+      <if test="record.watransfer != null">
+        WATransfer = #{record.watransfer,jdbcType=INTEGER},
+      </if>
+      <if test="record.whethermoneytransfer != null">
+        whetherMoneyTransfer = #{record.whethermoneytransfer,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update base_privatelend
+    set caseId = #{record.caseid,jdbcType=INTEGER},
+      whetherRepay = #{record.whetherrepay,jdbcType=INTEGER},
+      repaymentAmount = #{record.repaymentamount,jdbcType=INTEGER},
+      whetherInterest = #{record.whetherinterest,jdbcType=INTEGER},
+      interestRate = #{record.interestrate,jdbcType=DOUBLE},
+      defeandantExpenses = #{record.defeandantexpenses,jdbcType=INTEGER},
+      otherFee = #{record.otherfee,jdbcType=INTEGER},
+      whetherOverdue = #{record.whetheroverdue,jdbcType=INTEGER},
+      iou = #{record.iou,jdbcType=INTEGER},
+      commitment = #{record.commitment,jdbcType=INTEGER},
+      transferInstructions = #{record.transferinstructions,jdbcType=INTEGER},
+      weChatRecord = #{record.wechatrecord,jdbcType=INTEGER},
+      otherEvidence = #{record.otherevidence,jdbcType=INTEGER},
+      amountReturned = #{record.amountreturned,jdbcType=INTEGER},
+      amountOwed = #{record.amountowed,jdbcType=INTEGER},
+      cash = #{record.cash,jdbcType=INTEGER},
+      bankTransfer = #{record.banktransfer,jdbcType=INTEGER},
+      creditCard = #{record.creditcard,jdbcType=INTEGER},
+      WATransfer = #{record.watransfer,jdbcType=INTEGER},
+      whetherMoneyTransfer = #{record.whethermoneytransfer,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laywer.interprelaw.model.PrivateLendBase">
+    update base_privatelend
+    <set>
+      <if test="whetherrepay != null">
+        whetherRepay = #{whetherrepay,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentamount != null">
+        repaymentAmount = #{repaymentamount,jdbcType=INTEGER},
+      </if>
+      <if test="whetherinterest != null">
+        whetherInterest = #{whetherinterest,jdbcType=INTEGER},
+      </if>
+      <if test="interestrate != null">
+        interestRate = #{interestrate,jdbcType=DOUBLE},
+      </if>
+      <if test="defeandantexpenses != null">
+        defeandantExpenses = #{defeandantexpenses,jdbcType=INTEGER},
+      </if>
+      <if test="otherfee != null">
+        otherFee = #{otherfee,jdbcType=INTEGER},
+      </if>
+      <if test="whetheroverdue != null">
+        whetherOverdue = #{whetheroverdue,jdbcType=INTEGER},
+      </if>
+      <if test="iou != null">
+        iou = #{iou,jdbcType=INTEGER},
+      </if>
+      <if test="commitment != null">
+        commitment = #{commitment,jdbcType=INTEGER},
+      </if>
+      <if test="transferinstructions != null">
+        transferInstructions = #{transferinstructions,jdbcType=INTEGER},
+      </if>
+      <if test="wechatrecord != null">
+        weChatRecord = #{wechatrecord,jdbcType=INTEGER},
+      </if>
+      <if test="otherevidence != null">
+        otherEvidence = #{otherevidence,jdbcType=INTEGER},
+      </if>
+      <if test="amountreturned != null">
+        amountReturned = #{amountreturned,jdbcType=INTEGER},
+      </if>
+      <if test="amountowed != null">
+        amountOwed = #{amountowed,jdbcType=INTEGER},
+      </if>
+      <if test="cash != null">
+        cash = #{cash,jdbcType=INTEGER},
+      </if>
+      <if test="banktransfer != null">
+        bankTransfer = #{banktransfer,jdbcType=INTEGER},
+      </if>
+      <if test="creditcard != null">
+        creditCard = #{creditcard,jdbcType=INTEGER},
+      </if>
+      <if test="watransfer != null">
+        WATransfer = #{watransfer,jdbcType=INTEGER},
+      </if>
+      <if test="whethermoneytransfer != null">
+        whetherMoneyTransfer = #{whethermoneytransfer,jdbcType=INTEGER},
+      </if>
+    </set>
+    where caseId = #{caseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laywer.interprelaw.model.PrivateLendBase">
+    update base_privatelend
+    set whetherRepay = #{whetherrepay,jdbcType=INTEGER},
+      repaymentAmount = #{repaymentamount,jdbcType=INTEGER},
+      whetherInterest = #{whetherinterest,jdbcType=INTEGER},
+      interestRate = #{interestrate,jdbcType=DOUBLE},
+      defeandantExpenses = #{defeandantexpenses,jdbcType=INTEGER},
+      otherFee = #{otherfee,jdbcType=INTEGER},
+      whetherOverdue = #{whetheroverdue,jdbcType=INTEGER},
+      iou = #{iou,jdbcType=INTEGER},
+      commitment = #{commitment,jdbcType=INTEGER},
+      transferInstructions = #{transferinstructions,jdbcType=INTEGER},
+      weChatRecord = #{wechatrecord,jdbcType=INTEGER},
+      otherEvidence = #{otherevidence,jdbcType=INTEGER},
+      amountReturned = #{amountreturned,jdbcType=INTEGER},
+      amountOwed = #{amountowed,jdbcType=INTEGER},
+      cash = #{cash,jdbcType=INTEGER},
+      bankTransfer = #{banktransfer,jdbcType=INTEGER},
+      creditCard = #{creditcard,jdbcType=INTEGER},
+      WATransfer = #{watransfer,jdbcType=INTEGER},
+      whetherMoneyTransfer = #{whethermoneytransfer,jdbcType=INTEGER}
+    where caseId = #{caseid,jdbcType=INTEGER}
+  </update>
+</mapper>
