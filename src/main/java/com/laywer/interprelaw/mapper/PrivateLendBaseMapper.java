@@ -27,4 +27,6 @@ public interface PrivateLendBaseMapper {
     int updateByPrimaryKeySelective(PrivateLendBase record);
 
     int updateByPrimaryKey(PrivateLendBase record);
+
+    List<PrivateLendBase> selectAll();
 }

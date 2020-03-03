@@ -26,4 +26,14 @@ public class LawServiceImpl implements LawService {
     public int updateLaw(Law law) {
         return lawMapper.updateByPrimaryKey(law);
     }
+
+    @Override
+    public Law selectLaw(int caseId) {
+        return lawMapper.selectByCaseId(caseId);
+    }
+
+    @Override
+    public String selectLegalProvisions(int caseId) {
+        return null;
+    }
 }

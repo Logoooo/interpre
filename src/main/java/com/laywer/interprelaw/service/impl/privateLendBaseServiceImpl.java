@@ -6,6 +6,8 @@ import com.laywer.interprelaw.service.PrivateLendBaseService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.ResultSet;
+import java.util.List;
 
 @Service("privateLendBaseService")
 public class privateLendBaseServiceImpl implements PrivateLendBaseService {
@@ -30,5 +32,10 @@ public class privateLendBaseServiceImpl implements PrivateLendBaseService {
     @Override
     public int update(PrivateLendBase privateLendBase) {
         return privateLendBaseMapper.updateByPrimaryKey(privateLendBase);
+    }
+
+    @Override
+    public List<PrivateLendBase> selectAllCase() {
+        return privateLendBaseMapper.selectAll();
     }
 }

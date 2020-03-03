@@ -1,31 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.laywer.interprelaw.mapper.LawMapper" >
-  <resultMap id="BaseResultMap" type="com.laywer.interprelaw.model.Law" >
-    <id column="lawId" property="lawid" jdbcType="INTEGER" />
-    <result column="c_id" property="cId" jdbcType="INTEGER" />
-    <result column="context" property="context" jdbcType="VARCHAR" />
-    <result column="legalProvisions" property="legalprovisions" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laywer.interprelaw.mapper.LawMapper">
+  <resultMap id="BaseResultMap" type="com.laywer.interprelaw.model.Law">
+    <id column="lawId" jdbcType="INTEGER" property="lawid" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="legalProvisions" jdbcType="VARCHAR" property="legalprovisions" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.laywer.interprelaw.model.Law">
+    <result column="context" jdbcType="LONGVARCHAR" property="context" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -36,25 +38,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -65,131 +67,173 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    lawId, c_id, context, legalProvisions
+  <sql id="Base_Column_List">
+    lawId, c_id, legalProvisions
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laywer.interprelaw.model.LawExample" >
+  <sql id="Blob_Column_List">
+    context
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.laywer.interprelaw.model.LawExample" resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from base_law
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.laywer.interprelaw.model.LawExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from base_law
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from base_law
     where lawId = #{lawid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="selectByCaseId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+     *
+    from base_law
+    where c_id = #{caseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from base_law
     where lawId = #{lawid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.laywer.interprelaw.model.LawExample" >
+  <delete id="deleteByExample" parameterType="com.laywer.interprelaw.model.LawExample">
     delete from base_law
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.laywer.interprelaw.model.Law" >
-    insert into base_law (lawId, c_id, context,
-      legalProvisions)
-    values (#{lawid,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR},
-      #{legalprovisions,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.laywer.interprelaw.model.Law">
+    insert into base_law (lawId, c_id, legalProvisions, 
+      context)
+    values (#{lawid,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{legalprovisions,jdbcType=VARCHAR}, 
+      #{context,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.laywer.interprelaw.model.Law" >
+  <insert id="insertSelective" parameterType="com.laywer.interprelaw.model.Law">
     insert into base_law
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="lawid != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lawid != null">
         lawId,
       </if>
-      <if test="cId != null" >
+      <if test="cId != null">
         c_id,
       </if>
-      <if test="context != null" >
-        context,
-      </if>
-      <if test="legalprovisions != null" >
+      <if test="legalprovisions != null">
         legalProvisions,
       </if>
+      <if test="context != null">
+        context,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="lawid != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lawid != null">
         #{lawid,jdbcType=INTEGER},
       </if>
-      <if test="cId != null" >
+      <if test="cId != null">
         #{cId,jdbcType=INTEGER},
       </if>
-      <if test="context != null" >
-        #{context,jdbcType=VARCHAR},
-      </if>
-      <if test="legalprovisions != null" >
+      <if test="legalprovisions != null">
         #{legalprovisions,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        #{context,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.laywer.interprelaw.model.LawExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.laywer.interprelaw.model.LawExample" resultType="java.lang.Integer">
     select count(*) from base_law
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update base_law
-    <set >
-      <if test="record.lawid != null" >
+    <set>
+      <if test="record.lawid != null">
         lawId = #{record.lawid,jdbcType=INTEGER},
       </if>
-      <if test="record.cId != null" >
+      <if test="record.cId != null">
         c_id = #{record.cId,jdbcType=INTEGER},
       </if>
-      <if test="record.context != null" >
-        context = #{record.context,jdbcType=VARCHAR},
-      </if>
-      <if test="record.legalprovisions != null" >
+      <if test="record.legalprovisions != null">
         legalProvisions = #{record.legalprovisions,jdbcType=VARCHAR},
       </if>
+      <if test="record.context != null">
+        context = #{record.context,jdbcType=LONGVARCHAR},
+      </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update base_law
     set lawId = #{record.lawid,jdbcType=INTEGER},
       c_id = #{record.cId,jdbcType=INTEGER},
-      context = #{record.context,jdbcType=VARCHAR},
-      legalProvisions = #{record.legalprovisions,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+      legalProvisions = #{record.legalprovisions,jdbcType=VARCHAR},
+      context = #{record.context,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.laywer.interprelaw.model.Law" >
+  <update id="updateByExample" parameterType="map">
     update base_law
-    <set >
-      <if test="cId != null" >
+    set lawId = #{record.lawid,jdbcType=INTEGER},
+      c_id = #{record.cId,jdbcType=INTEGER},
+      legalProvisions = #{record.legalprovisions,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laywer.interprelaw.model.Law">
+    update base_law
+    <set>
+      <if test="cId != null">
         c_id = #{cId,jdbcType=INTEGER},
       </if>
-      <if test="context != null" >
-        context = #{context,jdbcType=VARCHAR},
-      </if>
-      <if test="legalprovisions != null" >
+      <if test="legalprovisions != null">
         legalProvisions = #{legalprovisions,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        context = #{context,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where lawId = #{lawid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.laywer.interprelaw.model.Law" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.laywer.interprelaw.model.Law">
     update base_law
     set c_id = #{cId,jdbcType=INTEGER},
-      context = #{context,jdbcType=VARCHAR},
+      legalProvisions = #{legalprovisions,jdbcType=VARCHAR},
+      context = #{context,jdbcType=LONGVARCHAR}
+    where lawId = #{lawid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laywer.interprelaw.model.Law">
+    update base_law
+    set c_id = #{cId,jdbcType=INTEGER},
       legalProvisions = #{legalprovisions,jdbcType=VARCHAR}
     where lawId = #{lawid,jdbcType=INTEGER}
   </update>

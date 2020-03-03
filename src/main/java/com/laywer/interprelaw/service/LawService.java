@@ -8,4 +8,8 @@ public interface LawService {
     public int deleteLaw(int lawId);
 
     public int updateLaw(Law law);
+
+    public Law selectLaw(int caseId);
+
+    public String selectLegalProvisions(int caseId);
 }

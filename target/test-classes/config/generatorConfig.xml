@@ -75,5 +75,7 @@
         <table schema="interprelaw" tableName="base_law" enableSelectByPrimaryKey="true"
             domainObjectName="Law">
         </table>
+        <table schema="interprelaw" tableName="menu" enableSelectByPrimaryKey="true"
+               domainObjectName="MenuTree"></table>
     </context>
 </generatorConfiguration>

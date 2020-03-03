@@ -2,6 +2,9 @@ package com.laywer.interprelaw.service;
 
 import com.laywer.interprelaw.model.PrivateLendBase;
 
+import java.sql.ResultSet;
+import java.util.List;
+
 public interface PrivateLendBaseService {
 
     //案例库插入数据
@@ -15,4 +18,7 @@ public interface PrivateLendBaseService {
 
     //更新案例库数据
     public int update(PrivateLendBase privateLendBase);
+
+    //查询案例库数据
+    public List<PrivateLendBase> selectAllCase();
 }
