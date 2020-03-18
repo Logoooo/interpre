@@ -157,6 +157,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select
+     *
+    from u_user
+  </select>
   <update id="updateByExampleSelective" parameterType="map">
     update u_user
     <set>

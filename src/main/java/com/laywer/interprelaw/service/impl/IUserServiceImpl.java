@@ -44,6 +44,11 @@ public class IUserServiceImpl implements IUserService {
 
     @Override
     public User selectById(int userId) {
-        return null;
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public List<User> selectAllUser() {
+        return userMapper.selectAllUser();
     }
 }

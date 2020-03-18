@@ -22,8 +22,6 @@ public interface LawMapper {
 
     Law selectByPrimaryKey(Integer lawid);
 
-    Law selectByCaseId(Integer caseId);
-
     int updateByExampleSelective(@Param("record") Law record, @Param("example") LawExample example);
 
     int updateByExampleWithBLOBs(@Param("record") Law record, @Param("example") LawExample example);
@@ -35,4 +33,6 @@ public interface LawMapper {
     int updateByPrimaryKeyWithBLOBs(Law record);
 
     int updateByPrimaryKey(Law record);
+
+    Law selectByCaseId(int caseId);
 }

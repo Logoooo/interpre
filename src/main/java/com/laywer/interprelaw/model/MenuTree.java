@@ -12,7 +12,17 @@ public class MenuTree {
 
     private Integer levels;
 
+    private String path;
+
     private List children = new ArrayList();
+
+    public List getChildren() {
+        return children;
+    }
+
+    public void setChildren(List children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;
@@ -46,18 +56,20 @@ public class MenuTree {
         this.levels = levels;
     }
 
-    public List getChildren() {
-        return children;
+    public String getPath() {
+        return path;
     }
 
-    public void setChildren(List children) {
-        this.children = children;
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
     }
 
     public MenuTree(Integer id, String authname) {
         this.id = id;
         this.authname = authname;
     }
+
+
 
     public MenuTree(Integer id, String authname, Integer pid) {
         this.id = id;
@@ -69,11 +81,12 @@ public class MenuTree {
         super();
     }
 
-    public MenuTree(Integer id, String authname, Integer pid, List children) {
+    public MenuTree(Integer id, String authname, Integer pid,String path, List children) {
         super();
         this.id = id;
         this.authname = authname;
         this.pid = pid;
+        this.path = path;
         this.children = children;
     }
 
@@ -84,6 +97,7 @@ public class MenuTree {
                 ", authname='" + authname + '\'' +
                 ", pid=" + pid +
                 ", levels=" + levels +
+                ", path='" + path + '\'' +
                 ", children=" + children +
                 '}';
     }

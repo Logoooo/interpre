@@ -7,10 +7,7 @@ import com.laywer.interprelaw.service.IUserService;
 import com.laywer.interprelaw.util.ApiResponseUtil;
 import com.laywer.interprelaw.util.JwtUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +17,7 @@ import static java.lang.System.out;
 
 @Controller
 @RequestMapping(value = "/user", method = RequestMethod.POST)
+@CrossOrigin
 public class LoginController {
     @Resource
     private IUserService userservice;

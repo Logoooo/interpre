@@ -27,6 +27,7 @@ public class MenuServiceImpl implements MenuService {
         treeMap.put("authName", "功能菜单");
         treeMap.put("children",treeList());
         treeMap.put("level",0);
+        treeMap.put("path","manager");
         JSONArray jsonObject = JSONArray.fromObject(treeMap);
 
         return jsonObject;
